@@ -4,9 +4,9 @@ AlgoVista is a correctness-first foundation for teaching and visualizing algorit
 coupling algorithm code directly to animation, it produces typed semantic execution traces that can
 be replayed and validated before a user interface renders them.
 
-The current milestone includes stable merge sort, first-match binary search, and deterministic BFS/DFS
-over validated graphs. It is an educational tool, not a benchmark suite or proof that one algorithm
-is universally best.
+The v1.0 release candidate includes stable merge sort, first-match binary search, deterministic
+BFS/DFS over validated graphs, an accessible playback workspace and reproducible release evidence.
+It is an educational tool, not a benchmark suite or proof that one algorithm is universally best.
 
 ## Why semantic traces?
 
@@ -34,6 +34,8 @@ a final answer that the algorithm never produced. AlgoVista separates concerns:
 - Responsive semantic playback workspace with visible and screen-reader status.
 - BFS/DFS graph playback with semantic node, edge, visited and frontier lists.
 - Keyboard navigation, reduced-motion behavior and explicit accessibility budgets.
+- Four synthetic, canonical demo artifacts with source, generator and SHA-256 lineage.
+- Byte-for-byte reproducible npm package verification and isolated-install smoke testing.
 
 ## Setup and verification
 
@@ -44,11 +46,16 @@ npm run typecheck
 npm test
 npm run build
 npm run verify:budgets
+npm run demo:verify
+npm run release:verify
 npx playwright install chromium
 npm run test:browser
-npm pack --dry-run
 npm audit --audit-level=high
 ```
+
+`npm run release:verify` creates `release/algovista-1.0.0.tgz`, `SHA256SUMS` and a machine-readable
+manifest only after two independently packed archives match byte-for-byte, every tar member matches
+the exact local allowlist and an isolated install imports and runs the public API.
 
 ## Example
 
@@ -97,6 +104,11 @@ reachable from the selected start node. Timings are not presented as cross-devic
 Tests verify edge cases and 100 deterministically generated arrays. These are correctness checks, not
 claims about performance across devices.
 
+The checked-in [demo evidence](demo/evidence/manifest.json) is generated entirely from synthetic
+inputs through the production public API. Run `npm run demo:verify` to regenerate it in a temporary
+directory, compare every byte, verify lineage and independently replay every artifact. See the
+[demo guide](docs/demo.md) for the evidence boundary.
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -104,13 +116,18 @@ claims about performance across devices.
 - [Artifact format](docs/artifact-format.md)
 - [Threat model](docs/threat-model.md)
 - [Accessibility contract](docs/accessibility.md)
+- [Reproducible demo](docs/demo.md)
 - [Roadmap](docs/roadmap.md)
 - [Interview guide](docs/interview-guide.md)
+- [v1.0.0 release notes](docs/releases/v1.0.0.md)
+- [Publication checklist](docs/releases/publication-checklist.md)
+- [Residual risks](docs/releases/residual-risks.md)
 - [ADR-001](docs/adr/001-semantic-traces-before-ui.md)
 - [ADR-002](docs/adr/002-progressive-semantic-workspace.md)
 - [ADR-003](docs/adr/003-separate-graph-trace-contract.md)
 - [ADR-004](docs/adr/004-canonical-trace-artifacts.md)
 - [ADR-005](docs/adr/005-semantic-graph-workspace.md)
+- [ADR-006](docs/adr/006-reproducible-release-evidence.md)
 
 ## Limitations
 
@@ -120,3 +137,6 @@ file parser. Artifacts are not signed or authenticated, and full snapshots remai
 deltas. The project does not execute untrusted user code. Automated browser and axe-core checks are
 regression evidence, not proof of usability with every assistive technology. Manual NVDA/Firefox and
 VoiceOver/Safari sessions remain required before the v1.0 accessibility gate can be claimed.
+The package checksum detects accidental or unauthenticated changes; artifacts and packages are not
+signed, and no publisher identity should be inferred from SHA-256 alone. The candidate is not a
+published GitHub Release until all pending manual gates and publication steps are completed.

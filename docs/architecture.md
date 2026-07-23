@@ -39,3 +39,14 @@ trace, assigns its family and hashes the canonical payload. Import limits UTF-8 
 limits structural depth and values, requires byte-for-byte canonical JSON, verifies the hash, rebuilds
 only exact allowlisted fields and then invokes the appropriate independent replay verifier. Imported
 arrays, records and traces are frozen before they cross the public API.
+
+Release evidence is a separate offline boundary. `generate-demo` invokes only the compiled public API
+and records four synthetic trace artifacts plus hashes of each artifact, the generator and the full
+TypeScript source tree. `verify-demo` regenerates into a temporary directory, requires the exact file
+set and bytes, imports every artifact and checks an independently defined expected result.
+
+`verify-release` runs `npm pack` twice and requires identical archive bytes. It parses gzip/tar without
+extracting it, verifies header checksums, permits only regular files under `package/`, rejects
+traversal, duplicates and special members, and compares the exact archive allowlist and bytes with
+the local build. It then installs the archive with scripts disabled in an isolated temporary project
+and smoke-tests the public API. CI uploads only the package, its checksum and the release manifest.

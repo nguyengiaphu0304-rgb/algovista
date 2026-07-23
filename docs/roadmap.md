@@ -20,9 +20,12 @@
 - [x] Graph traversal trace engine with deterministic fixtures
 - [x] Accessible BFS/DFS graph playback workspace
 - [x] Shareable, validated trace import/export
-- [ ] Performance and accessibility budgets
-- [ ] Reproducible demo, screenshots, release notes and verified package
+- [x] Performance and accessibility budgets
+- [x] Reproducible demo evidence, release notes and verified package
 - [ ] Manual NVDA/Firefox and VoiceOver/Safari accessibility evidence
+
+Automated and package gates are complete for the v1.0 release candidate. The remaining manual
+assistive-technology sessions are intentionally not inferred from Chromium or axe-core results.
 
 ## v0.3 deterministic graph traces
 
