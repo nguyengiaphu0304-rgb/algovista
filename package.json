@@ -1,6 +1,6 @@
 {
   "name": "algovista",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Correctness-first semantic traces for accessible algorithm visualization",
   "type": "module",
   "license": "MIT",

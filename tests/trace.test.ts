@@ -12,8 +12,12 @@ import {
 } from "../src/index.js";
 import {
   clampedStepIndex,
+  createGraphWorkspaceRun,
   createWorkspaceRun,
+  describeGraphStep,
   describeStep,
+  parseEdgeLines,
+  parseNodeLines,
   parseNumberList,
 } from "../src/web/controller.js";
 
@@ -144,4 +148,47 @@ test("workspace controller parses, validates, and describes verified traces", ()
   assert.throws(() => createWorkspaceRun("binary-search", "1, 2", ""), /target/);
   assert.equal(clampedStepIndex(0, -1, 4), 0);
   assert.equal(clampedStepIndex(2, 9, 4), 3);
+});
+
+test("workspace controller parses and verifies accessible graph runs", () => {
+  assert.deepEqual(parseNodeLines("A\nB\nC"), ["A", "B", "C"]);
+  assert.deepEqual(parseEdgeLines("A -> B\nA->C"), [
+    ["A", "B"],
+    ["A", "C"],
+  ]);
+  assert.throws(() => parseNodeLines("A\n\nB"), /line 2 is empty/);
+  assert.throws(() => parseEdgeLines("A-B"), /exactly one/);
+  assert.throws(() => parseEdgeLines("A -> B -> C"), /exactly one/);
+  assert.throws(() => parseEdgeLines("A -> "), /two node labels/);
+
+  const breadthFirst = createGraphWorkspaceRun(
+    "breadth-first-search",
+    "C\nA\nB\nD",
+    "A -> C\nA -> B\nB -> D",
+    "A",
+    false,
+  );
+  assert.equal(breadthFirst.kind, "graph");
+  assert.deepEqual(breadthFirst.nodes, ["A", "B", "C", "D"]);
+  assert.match(breadthFirst.summary, /A, B, C, D/);
+  const firstStep = breadthFirst.steps[0];
+  assert(firstStep);
+  assert.match(describeGraphStep(firstStep), /started breadth-first-search at A/);
+
+  const depthFirst = createGraphWorkspaceRun(
+    "depth-first-search",
+    "A\nB\nC\nD",
+    "A -> B\nA -> C\nB -> D",
+    "A",
+    false,
+  );
+  assert.match(depthFirst.summary, /A, B, D, C/);
+  assert.throws(
+    () => createGraphWorkspaceRun("breadth-first-search", "A\nB", "A -> C", "A", false),
+    /unknown node/,
+  );
+  assert.throws(
+    () => createGraphWorkspaceRun("breadth-first-search", "A\nB", "", "C", false),
+    /start node/,
+  );
 });

@@ -49,3 +49,10 @@ Canonical JSON makes byte output reproducible and gives SHA-256 one unambiguous 
 detects corruption but is deliberately not described as authentication because anyone can recompute
 it. Import therefore reconstructs an allowlisted domain object and independently replays every step;
 a matching hash alone is never enough.
+
+## Why not draw the graph on canvas?
+
+A canvas-only view would hide relationships and traversal state from many screen readers and make
+keyboard inspection harder. The current workspace uses semantic lists for nodes, edges, visited order
+and frontier. CSS adds a visual layer, while the verified trace and text remain the shared source of
+truth. A future spatial diagram can be progressive enhancement rather than the only representation.

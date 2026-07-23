@@ -18,6 +18,7 @@
 ## v1.0 portfolio release
 
 - [x] Graph traversal trace engine with deterministic fixtures
+- [x] Accessible BFS/DFS graph playback workspace
 - [x] Shareable, validated trace import/export
 - [ ] Performance and accessibility budgets
 - [ ] Reproducible demo, screenshots, release notes and verified package
@@ -37,3 +38,11 @@
 - [x] Exact schema reconstruction and independent replay
 - [x] Pre-parse byte, depth and structure limits
 - [x] Deterministic round-trip and tamper fixtures
+
+## v0.5 accessible graph workspace
+
+- [x] Discriminated numeric and graph presentation models
+- [x] Bounded line-oriented graph input adapter
+- [x] Semantic node, edge, visited and frontier lists
+- [x] Shared keyboard playback and live-status narration
+- [x] Graph validation, reflow and browser accessibility regression tests
