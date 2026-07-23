@@ -86,7 +86,7 @@ textarea {
   resize: vertical;
 }
 
-.field-group {
+.field-group:not([hidden]) {
   display: grid;
   gap: 0.6rem;
 }

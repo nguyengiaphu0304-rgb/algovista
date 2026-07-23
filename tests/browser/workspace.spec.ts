@@ -6,6 +6,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("generates a semantic trace and supports keyboard playback", async ({ page }) => {
+  await expect(page.getByLabel("Search target")).toBeHidden();
+  await expect(page.getByLabel("Nodes, one per line")).toBeHidden();
   await page.getByRole("button", { name: "Generate verified trace" }).click();
   await expect(page.getByRole("status")).toContainText("Step 1");
   await expect(page.getByRole("list", { name: "Current values" })).toBeVisible();
