@@ -22,3 +22,8 @@ invokes the public trace generators and replays the result before returning it t
 Playback state contains only a trace reference, step index and timer. The DOM adapter renders with
 native controls, `textContent`, a visible live status and an ordered-list fallback. It never sorts,
 searches or modifies snapshots.
+
+Graph traversal has four parallel boundaries: normalization creates canonical immutable graph data;
+adjacency construction derives sorted neighbors; BFS/DFS generators own queue or stack execution; and
+graph replay independently reconstructs every transition. A separate graph schema avoids weakening
+the numeric-array invariants or translating meaningful node labels into opaque numbers.

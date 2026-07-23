@@ -17,8 +17,15 @@
 
 ## v1.0 portfolio release
 
-- [ ] Graph traversal trace engine with deterministic fixtures
+- [x] Graph traversal trace engine with deterministic fixtures
 - [ ] Shareable, validated trace import/export
 - [ ] Performance and accessibility budgets
 - [ ] Reproducible demo, screenshots, release notes and verified package
 - [ ] Manual NVDA/Firefox and VoiceOver/Safari accessibility evidence
+
+## v0.3 deterministic graph traces
+
+- [x] Canonical directed and undirected graph model
+- [x] Deterministic BFS and iterative DFS
+- [x] Independent graph replay verifier
+- [x] Cyclic, disconnected, self-loop, adversarial and seeded fixtures
