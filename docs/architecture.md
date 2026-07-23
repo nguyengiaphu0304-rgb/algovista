@@ -27,3 +27,9 @@ Graph traversal has four parallel boundaries: normalization creates canonical im
 adjacency construction derives sorted neighbors; BFS/DFS generators own queue or stack execution; and
 graph replay independently reconstructs every transition. A separate graph schema avoids weakening
 the numeric-array invariants or translating meaningful node labels into opaque numbers.
+
+`trace-codec` is a serialization boundary over both trace families. Export canonicalizes a bounded
+trace, assigns its family and hashes the canonical payload. Import limits UTF-8 bytes before parsing,
+limits structural depth and values, requires byte-for-byte canonical JSON, verifies the hash, rebuilds
+only exact allowlisted fields and then invokes the appropriate independent replay verifier. Imported
+arrays, records and traces are frozen before they cross the public API.

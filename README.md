@@ -26,6 +26,7 @@ a final answer that the algorithm never produced. AlgoVista separates concerns:
 - Deterministic BFS and iterative DFS over canonical directed or undirected graphs.
 - Graph validation for Unicode labels, duplicate edges, unknown endpoints and resource limits.
 - Independent graph replay that rejects forged visited/frontier state.
+- Canonical trace artifact import/export with strict schemas, a 1 MiB limit and SHA-256 integrity.
 - Frozen inputs, outputs, steps, snapshots, indices and metadata.
 - Bounded inputs and traces with fail-closed validation.
 - Replay checks for schema, order, mutations, sort multiset and search result integrity.
@@ -69,6 +70,19 @@ console.log(trace.order); // ["A", "B", "C"]
 console.log(replayGraphTrace(trace).reachableCount); // 3
 ```
 
+```ts
+import { exportTraceArtifact, importTraceArtifact, traceMergeSort } from "algovista";
+
+const text = await exportTraceArtifact(traceMergeSort([3, 1, 2]));
+const verified = await importTraceArtifact(text);
+console.log(verified.algorithm); // "merge-sort"
+```
+
+The importer accepts only canonical UTF-8 JSON produced by the exporter. It verifies the envelope,
+payload digest, exact field sets and every algorithm transition before returning a deeply frozen
+trace. SHA-256 detects accidental or unauthenticated payload changes; it does not establish who
+created an artifact. See the [artifact format](docs/artifact-format.md) for the security boundary.
+
 ## Complexity and evidence
 
 Merge sort uses `O(n log n)` comparisons and `O(n)` working memory. Trace storage is intentionally
@@ -86,6 +100,7 @@ claims about performance across devices.
 
 - [Architecture](docs/architecture.md)
 - [Trace contract](docs/trace-contract.md)
+- [Artifact format](docs/artifact-format.md)
 - [Threat model](docs/threat-model.md)
 - [Accessibility contract](docs/accessibility.md)
 - [Roadmap](docs/roadmap.md)
@@ -93,11 +108,13 @@ claims about performance across devices.
 - [ADR-001](docs/adr/001-semantic-traces-before-ui.md)
 - [ADR-002](docs/adr/002-progressive-semantic-workspace.md)
 - [ADR-003](docs/adr/003-separate-graph-trace-contract.md)
+- [ADR-004](docs/adr/004-canonical-trace-artifacts.md)
 
 ## Limitations
 
-The browser currently presents numeric merge sort and binary search; graph traces are library-only.
-All trace types store full snapshots rather than compact deltas and the project does not execute
-untrusted user code. Automated browser and axe-core checks are regression evidence, not proof of
-usability with every assistive technology. Manual NVDA/Firefox and VoiceOver/Safari sessions remain
-required before the v1.0 accessibility gate can be claimed.
+The browser currently presents numeric merge sort and binary search; graph traces and artifact
+import/export are library-only. Artifacts are not signed or authenticated, and full snapshots remain
+larger than compact deltas. The project does not execute untrusted user code. Automated browser and
+axe-core checks are regression evidence, not proof of usability with every assistive technology.
+Manual NVDA/Firefox and VoiceOver/Safari sessions remain required before the v1.0 accessibility gate
+can be claimed.

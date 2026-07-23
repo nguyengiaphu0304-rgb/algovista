@@ -18,7 +18,7 @@
 ## v1.0 portfolio release
 
 - [x] Graph traversal trace engine with deterministic fixtures
-- [ ] Shareable, validated trace import/export
+- [x] Shareable, validated trace import/export
 - [ ] Performance and accessibility budgets
 - [ ] Reproducible demo, screenshots, release notes and verified package
 - [ ] Manual NVDA/Firefox and VoiceOver/Safari accessibility evidence
@@ -29,3 +29,11 @@
 - [x] Deterministic BFS and iterative DFS
 - [x] Independent graph replay verifier
 - [x] Cyclic, disconnected, self-loop, adversarial and seeded fixtures
+
+## v0.4 validated trace artifacts
+
+- [x] Versioned canonical JSON envelope
+- [x] SHA-256 payload-integrity check
+- [x] Exact schema reconstruction and independent replay
+- [x] Pre-parse byte, depth and structure limits
+- [x] Deterministic round-trip and tamper fixtures
