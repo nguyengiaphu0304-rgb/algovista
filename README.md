@@ -32,6 +32,7 @@ a final answer that the algorithm never produced. AlgoVista separates concerns:
 - Replay checks for schema, order, mutations, sort multiset and search result integrity.
 - Seeded property-style coverage without live services or nondeterministic fixtures.
 - Responsive semantic playback workspace with visible and screen-reader status.
+- BFS/DFS graph playback with semantic node, edge, visited and frontier lists.
 - Keyboard navigation, reduced-motion behavior and explicit accessibility budgets.
 
 ## Setup and verification
@@ -109,12 +110,13 @@ claims about performance across devices.
 - [ADR-002](docs/adr/002-progressive-semantic-workspace.md)
 - [ADR-003](docs/adr/003-separate-graph-trace-contract.md)
 - [ADR-004](docs/adr/004-canonical-trace-artifacts.md)
+- [ADR-005](docs/adr/005-semantic-graph-workspace.md)
 
 ## Limitations
 
-The browser currently presents numeric merge sort and binary search; graph traces and artifact
-import/export are library-only. Artifacts are not signed or authenticated, and full snapshots remain
-larger than compact deltas. The project does not execute untrusted user code. Automated browser and
-axe-core checks are regression evidence, not proof of usability with every assistive technology.
-Manual NVDA/Firefox and VoiceOver/Safari sessions remain required before the v1.0 accessibility gate
-can be claimed.
+The browser presents merge sort, binary search, BFS and DFS, while artifact import/export remains
+library-only. Graph entry uses a deliberately small line-oriented UI contract, not an arbitrary graph
+file parser. Artifacts are not signed or authenticated, and full snapshots remain larger than compact
+deltas. The project does not execute untrusted user code. Automated browser and axe-core checks are
+regression evidence, not proof of usability with every assistive technology. Manual NVDA/Firefox and
+VoiceOver/Safari sessions remain required before the v1.0 accessibility gate can be claimed.

@@ -71,6 +71,7 @@ label {
 
 input,
 select,
+textarea,
 button {
   min-height: 2.75rem;
   border: 2px solid #66718a;
@@ -79,6 +80,27 @@ button {
   color: inherit;
   background: #fff;
   font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.field-group:not([hidden]) {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.checkbox-label input {
+  min-height: 1.5rem;
+  inline-size: 1.5rem;
+  margin: 0;
 }
 
 button {
@@ -187,6 +209,84 @@ progress {
   box-shadow: inset 0 -0.35rem #8a3ffc;
 }
 
+.graph-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.graph-grid > div {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid #cad2e3;
+  border-radius: 0.75rem;
+}
+
+.graph-grid h3 {
+  margin-top: 0;
+}
+
+.graph-grid li {
+  overflow-wrap: anywhere;
+}
+
+.graph-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 0;
+  list-style: none;
+}
+
+.graph-nodes li,
+.legend span {
+  max-width: 100%;
+  border: 2px solid #66718a;
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+}
+
+.graph-nodes li[data-state="current"],
+.legend span[data-key="current"] {
+  border-style: double;
+  border-width: 0.3rem;
+  border-color: #8a3ffc;
+  background: #f1e8ff;
+}
+
+.graph-nodes li[data-state="visited"],
+.legend span[data-key="visited"] {
+  border-color: #17633a;
+  background: #dff7e9;
+}
+
+.graph-nodes li[data-state="frontier"],
+.legend span[data-key="frontier"] {
+  border-style: dashed;
+  border-color: #a04b00;
+  background: #fff1dc;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.legend legend {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.legend span {
+  font-size: 0.9rem;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -209,6 +309,10 @@ footer {
   section:last-child {
     grid-column: auto;
   }
+
+  .graph-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -230,6 +334,7 @@ footer {
   section,
   input,
   select,
+  textarea,
   button {
     color: #f2f5ff;
     background: #1b2438;
@@ -254,5 +359,20 @@ footer {
 
   .values li[data-active="true"] {
     background: #4b287b;
+  }
+
+  .graph-nodes li[data-state="current"],
+  .legend span[data-key="current"] {
+    background: #4b287b;
+  }
+
+  .graph-nodes li[data-state="visited"],
+  .legend span[data-key="visited"] {
+    background: #174c32;
+  }
+
+  .graph-nodes li[data-state="frontier"],
+  .legend span[data-key="frontier"] {
+    background: #5c370e;
   }
 }

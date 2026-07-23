@@ -7,7 +7,7 @@
     <title>AlgoVista accessible trace workspace</title>
     <meta
       name="description"
-      content="Explore verified merge-sort and binary-search traces with keyboard and screen-reader support."
+      content="Explore verified sorting, searching, BFS and DFS traces with keyboard and screen-reader support."
     />
     <link rel="stylesheet" href="/web/styles.css" />
   </head>
@@ -26,22 +26,63 @@
           <select id="algorithm" name="algorithm">
             <option value="merge-sort">Merge sort</option>
             <option value="binary-search">Binary search</option>
+            <option value="breadth-first-search">Breadth-first search</option>
+            <option value="depth-first-search">Depth-first search</option>
           </select>
 
-          <label for="values">Comma-separated values</label>
-          <input
-            id="values"
-            name="values"
-            value="8, 3, 5, 3, 1"
-            autocomplete="off"
-            spellcheck="false"
-            aria-describedby="values-help"
-          />
-          <p id="values-help" class="help">Finite numbers only, with at most 512 values.</p>
+          <div id="array-fields" class="field-group">
+            <label for="values">Comma-separated values</label>
+            <input
+              id="values"
+              name="values"
+              value="8, 3, 5, 3, 1"
+              autocomplete="off"
+              spellcheck="false"
+              aria-describedby="values-help"
+            />
+            <p id="values-help" class="help">Finite numbers only, with at most 512 values.</p>
 
-          <div id="target-group" hidden>
-            <label for="target">Search target</label>
-            <input id="target" name="target" inputmode="decimal" autocomplete="off" />
+            <div id="target-group" class="field-group" hidden>
+              <label for="target">Search target</label>
+              <input id="target" name="target" inputmode="decimal" autocomplete="off" />
+            </div>
+          </div>
+
+          <div id="graph-fields" class="field-group" hidden>
+            <label for="nodes">Nodes, one per line</label>
+            <textarea
+              id="nodes"
+              name="nodes"
+              rows="4"
+              spellcheck="false"
+              aria-describedby="nodes-help"
+            >A
+B
+C
+D</textarea>
+            <p id="nodes-help" class="help">
+              Labels are Unicode NFC, case-sensitive and limited to 64 code points.
+            </p>
+
+            <label for="edges">Edges, one “from -&gt; to” pair per line</label>
+            <textarea
+              id="edges"
+              name="edges"
+              rows="4"
+              spellcheck="false"
+              aria-describedby="edges-help"
+            >A -> B
+A -> C
+B -> D</textarea>
+            <p id="edges-help" class="help">Every endpoint must appear in the node list.</p>
+
+            <label for="start">Start node</label>
+            <input id="start" name="start" value="A" autocomplete="off" />
+
+            <label class="checkbox-label" for="directed">
+              <input id="directed" name="directed" type="checkbox" />
+              Treat edges as directed
+            </label>
           </div>
           <button class="primary" type="submit">Generate verified trace</button>
         </form>
@@ -65,9 +106,43 @@
         <p class="help">Outside form fields: use ←/→, Space, Home and End.</p>
       </section>
 
-      <section aria-labelledby="values-heading">
-        <h2 id="values-heading">Current values</h2>
-        <ol id="value-list" class="values" aria-labelledby="values-heading"></ol>
+      <section aria-labelledby="state-heading">
+        <h2 id="state-heading">Current state</h2>
+        <div id="array-state">
+          <h3 id="values-heading">Current values</h3>
+          <ol id="value-list" class="values" aria-labelledby="values-heading"></ol>
+        </div>
+        <div id="graph-state" hidden>
+          <div class="graph-grid">
+            <div>
+              <h3 id="graph-nodes-heading">Graph nodes</h3>
+              <ul
+                id="graph-node-list"
+                class="graph-nodes"
+                aria-labelledby="graph-nodes-heading"
+              ></ul>
+            </div>
+            <div>
+              <h3 id="graph-edges-heading">Graph edges</h3>
+              <ul id="graph-edge-list" aria-labelledby="graph-edges-heading"></ul>
+            </div>
+            <div>
+              <h3 id="visited-heading">Visited order</h3>
+              <ul id="visited-list" aria-labelledby="visited-heading"></ul>
+            </div>
+            <div>
+              <h3 id="frontier-heading">Frontier</h3>
+              <ul id="frontier-list" aria-labelledby="frontier-heading"></ul>
+            </div>
+          </div>
+          <fieldset class="legend">
+            <legend>Graph node state legend</legend>
+            <span data-key="current">Current</span>
+            <span data-key="visited">Visited</span>
+            <span data-key="frontier">Frontier</span>
+            <span data-key="pending">Pending</span>
+          </fieldset>
+        </div>
         <noscript>This workspace requires JavaScript to generate and verify traces.</noscript>
       </section>
     </main>

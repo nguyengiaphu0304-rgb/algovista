@@ -23,6 +23,12 @@ Playback state contains only a trace reference, step index and timer. The DOM ad
 native controls, `textContent`, a visible live status and an ordered-list fallback. It never sorts,
 searches or modifies snapshots.
 
+The controller returns a discriminated `array` or `graph` workspace run. Graph text fields use an
+explicit one-node-per-line and `from -> to` edge contract, then delegate normalization and all graph
+invariants to the core. The DOM adapter narrows on the run kind and cannot read numeric snapshots as
+graph state. Graph rendering derives node state, visited order and frontier only from the verified
+step.
+
 Graph traversal has four parallel boundaries: normalization creates canonical immutable graph data;
 adjacency construction derives sorted neighbors; BFS/DFS generators own queue or stack execution; and
 graph replay independently reconstructs every transition. A separate graph schema avoids weakening

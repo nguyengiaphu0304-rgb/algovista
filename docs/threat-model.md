@@ -22,6 +22,12 @@ limits. Playback stops at the final step and rapid input cannot mutate frozen tr
 server is for local evidence only; it normalizes paths, rejects traversal and is not a production
 deployment.
 
+Graph UI input is untrusted text. The adapter accepts only newline-delimited labels and edge lines
+with exactly one `->` separator, never HTML or executable syntax. Hidden mode-specific fields are
+disabled, mode changes discard the prior playback run, and failed validation leaves the entered text
+visible while disabling playback. Core normalization remains authoritative for Unicode collisions,
+unknown endpoints, duplicates and resource limits.
+
 Graph-specific untrusted inputs include normalization-colliding labels, unknown endpoints, duplicate
 or reversed duplicate edges, cycles and resource-exhaustion graphs. Normalization rejects ambiguity
 before execution, limits nodes/edges/steps and never evaluates a label. Replay rejects forged
