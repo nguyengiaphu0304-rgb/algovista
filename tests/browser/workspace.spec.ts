@@ -65,7 +65,8 @@ test("keeps graph input intact and disables playback after graph validation erro
   await page.getByLabel("Algorithm").selectOption("merge-sort");
   await expect(page.getByLabel("Comma-separated values")).toBeEnabled();
   await expect(page.getByLabel("Nodes, one per line")).toBeHidden();
-  await expect(page.getByRole("alert")).toBeEmpty();
+  await expect(page.locator("#error")).toBeEmpty();
+  await expect(page.locator("#error")).toBeHidden();
   await page.getByRole("button", { name: "Generate verified trace" }).click();
   await expect(page.getByRole("status")).toContainText("started merge-sort");
 });
