@@ -1,0 +1,36 @@
+{
+  "name": "algovista",
+  "version": "0.1.0",
+  "description": "Correctness-first semantic traces for accessible algorithm visualization",
+  "type": "module",
+  "license": "MIT",
+  "author": "Nguyen Gia Phu",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test:compile": "tsc -p tsconfig.test.json",
+    "test": "npm run test:compile && node --test dist-test/tests/*.test.js",
+    "verify": "npm run check && npm run typecheck && npm test && npm run build && npm pack --dry-run && npm audit --audit-level=high"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.5",
+    "@types/node": "24.13.3",
+    "typescript": "7.0.2"
+  }
+}
