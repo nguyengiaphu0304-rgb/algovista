@@ -27,3 +27,11 @@ or reversed duplicate edges, cycles and resource-exhaustion graphs. Normalizatio
 before execution, limits nodes/edges/steps and never evaluates a label. Replay rejects forged
 visited/frontier state, repeated visits, reordered steps, altered results and non-canonical graph data.
 These controls protect deterministic teaching output; they are not a graph database security model.
+
+Imported artifact risks include parser resource exhaustion, ambiguous encodings, unknown-field
+smuggling, algorithm-family confusion, modified steps and forged results. The codec limits input to
+1 MiB before `JSON.parse`, rejects malformed Unicode, caps depth and structural values, requires a
+single canonical representation, uses exact field allowlists and replays the reconstructed trace.
+SHA-256 detects payload changes only. Because the digest is stored beside the payload and no trusted
+key signs it, an attacker can recompute it; replay validation remains the correctness boundary and
+the artifact does not authenticate a person, origin or release.

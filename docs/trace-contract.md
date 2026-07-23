@@ -31,3 +31,10 @@ and 2,048 edges; self-loops are allowed and cycles never cause repeat visits.
 BFS uses a queue. Iterative DFS uses a stack and pushes reverse-sorted neighbors so visits occur in
 ascending canonical order. Only the component reachable from the requested start node is visited.
 Replay reconstructs every expected edge examination, discovery, visit and frontier transition.
+
+## Portable artifact contract
+
+Numeric and graph traces can be wrapped in the versioned canonical artifact described in
+[`artifact-format.md`](artifact-format.md). Serialization does not weaken either trace schema:
+import reconstructs the relevant immutable domain type and runs its existing replay verifier before
+returning it.

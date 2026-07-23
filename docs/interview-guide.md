@@ -42,3 +42,10 @@ both into shared playback controls.
 Labels normalize to Unicode NFC and compare without locale-dependent collation. Undirected edges are
 canonicalized, adjacency is sorted, BFS uses FIFO, and DFS pushes reverse-sorted neighbors onto a LIFO
 stack. Input node and edge order therefore cannot change the result.
+
+## Why canonical JSON plus replay?
+
+Canonical JSON makes byte output reproducible and gives SHA-256 one unambiguous payload. The digest
+detects corruption but is deliberately not described as authentication because anyone can recompute
+it. Import therefore reconstructs an allowlisted domain object and independently replays every step;
+a matching hash alone is never enough.

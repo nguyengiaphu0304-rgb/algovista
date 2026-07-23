@@ -20,6 +20,15 @@ export { normalizeGraph } from "./graph-validation.js";
 export { traceMergeSort } from "./merge-sort.js";
 export { replayTrace } from "./replay.js";
 export {
+  exportTraceArtifact,
+  importTraceArtifact,
+  MAX_TRACE_ARTIFACT_BYTES,
+  TRACE_ARTIFACT_FORMAT,
+  TRACE_ARTIFACT_VERSION,
+  type TraceArtifact,
+  type TraceArtifactKind,
+} from "./trace-codec.js";
+export {
   type AlgorithmId,
   MAX_INPUT_LENGTH,
   MAX_TRACE_STEPS,
