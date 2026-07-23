@@ -4,3 +4,5 @@ dist-test/
 lib/
 coverage/
 *.tgz
+playwright-report/
+test-results/

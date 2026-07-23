@@ -10,10 +10,10 @@
 
 ## v0.2 accessible visual workspace
 
-- [ ] Responsive array visualization with semantic HTML fallback
-- [ ] Keyboard playback, focus management and visible status
-- [ ] Screen-reader narration and reduced-motion behavior
-- [ ] 200% zoom/reflow and automated browser accessibility tests
+- [x] Responsive array visualization with semantic HTML fallback
+- [x] Keyboard playback, focus management and visible status
+- [x] Screen-reader narration and reduced-motion behavior
+- [x] 200% zoom/reflow and automated browser accessibility tests
 
 ## v1.0 portfolio release
 
@@ -21,3 +21,4 @@
 - [ ] Shareable, validated trace import/export
 - [ ] Performance and accessibility budgets
 - [ ] Reproducible demo, screenshots, release notes and verified package
+- [ ] Manual NVDA/Firefox and VoiceOver/Safari accessibility evidence
