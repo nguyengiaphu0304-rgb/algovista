@@ -29,3 +29,16 @@ The browser milestone demonstrates semantic rendering, keyboard playback, reduce
 automated accessibility regression checks. Those gates reduce risk but do not prove real
 assistive-technology usability. Manual NVDA/Firefox and VoiceOver/Safari sessions remain an explicit
 release gate.
+
+## Why a separate graph trace type?
+
+Array algorithms expose numeric snapshots and active indices. Graph traversals expose visited sets,
+edges and a queue or stack. One oversized union would make invalid combinations representable and
+weaken replay. Separate versioned schemas keep each invariant explicit while the UI can still adapt
+both into shared playback controls.
+
+## How is traversal deterministic?
+
+Labels normalize to Unicode NFC and compare without locale-dependent collation. Undirected edges are
+canonicalized, adjacency is sorted, BFS uses FIFO, and DFS pushes reverse-sorted neighbors onto a LIFO
+stack. Input node and edge order therefore cannot change the result.

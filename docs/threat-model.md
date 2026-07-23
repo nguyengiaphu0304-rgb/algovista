@@ -21,3 +21,9 @@ ships a restrictive CSP in its evidence server. Trace generation retains the cor
 limits. Playback stops at the final step and rapid input cannot mutate frozen traces. The static demo
 server is for local evidence only; it normalizes paths, rejects traversal and is not a production
 deployment.
+
+Graph-specific untrusted inputs include normalization-colliding labels, unknown endpoints, duplicate
+or reversed duplicate edges, cycles and resource-exhaustion graphs. Normalization rejects ambiguity
+before execution, limits nodes/edges/steps and never evaluates a label. Replay rejects forged
+visited/frontier state, repeated visits, reordered steps, altered results and non-canonical graph data.
+These controls protect deterministic teaching output; they are not a graph database security model.
