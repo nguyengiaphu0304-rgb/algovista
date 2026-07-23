@@ -27,8 +27,13 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run verify:budgets
-      - run: npm pack --dry-run
+      - run: npm run release:verify
       - run: npm audit --audit-level=high
+      - uses: actions/upload-artifact@v4
+        with:
+          name: algovista-v1.0.0-node-${{ matrix.node }}
+          path: release/
+          if-no-files-found: error
 
   browser:
     runs-on: ubuntu-latest

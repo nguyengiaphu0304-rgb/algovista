@@ -41,3 +41,10 @@ single canonical representation, uses exact field allowlists and replays the rec
 SHA-256 detects payload changes only. Because the digest is stored beside the payload and no trusted
 key signs it, an attacker can recompute it; replay validation remains the correctness boundary and
 the artifact does not authenticate a person, origin or release.
+
+Release risks include stale demo output, package/source mismatch, archive path traversal, duplicate or
+special tar members and falsely treating a checksum as identity. CI regenerates evidence from the
+compiled public API, requires exact bytes and independently replays every artifact. Package checks
+pack twice, parse without extraction, validate tar header checksums, require regular members under an
+exact allowlist, compare archived bytes with the local build and smoke-test an isolated install with
+scripts disabled. The published checksum still provides integrity rather than signature or provenance.

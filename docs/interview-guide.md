@@ -56,3 +56,12 @@ A canvas-only view would hide relationships and traversal state from many screen
 keyboard inspection harder. The current workspace uses semantic lists for nodes, edges, visited order
 and frontier. CSS adds a visual layer, while the verified trace and text remain the shared source of
 truth. A future spatial diagram can be progressive enhancement rather than the only representation.
+
+## What makes the release evidence reproducible?
+
+The demo generator uses only the compiled public API and synthetic fixtures, then records source,
+generator and artifact hashes. Verification regenerates into a temporary directory and requires exact
+bytes before independent replay. The package is built twice, and archive bytes must match. A strict
+tar parser rejects traversal, duplicates and special members before comparing every member with the
+local build and smoke-testing an isolated install. This detects drift without claiming that SHA-256
+authenticates the publisher.
