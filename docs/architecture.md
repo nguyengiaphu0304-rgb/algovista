@@ -16,3 +16,9 @@ future UI will consume the public trace contract without importing algorithm int
 
 Full snapshots make replay and interview discussion straightforward but use more memory than deltas.
 The explicit 512-value and 100,000-step limits keep that choice bounded.
+
+The browser workspace is a presentation adapter in `src/web`. Its controller parses user input,
+invokes the public trace generators and replays the result before returning it to the DOM adapter.
+Playback state contains only a trace reference, step index and timer. The DOM adapter renders with
+native controls, `textContent`, a visible live status and an ordered-list fallback. It never sorts,
+searches or modifies snapshots.

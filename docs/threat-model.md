@@ -15,3 +15,9 @@ comparators because comparator side effects and inconsistent ordering would expa
 Future UI risks include unsafe text rendering, animation-triggered vestibular discomfort, inaccessible
 canvas-only output and denial of service through rapid controls. The UI milestone must use text-safe
 rendering, reduced-motion support, keyboard controls and bounded playback.
+
+The current workspace renders values only with `textContent`, uses no remote services or storage and
+ships a restrictive CSP in its evidence server. Trace generation retains the core input and step
+limits. Playback stops at the final step and rapid input cannot mutate frozen traces. The static demo
+server is for local evidence only; it normalizes paths, rejects traversal and is not a production
+deployment.

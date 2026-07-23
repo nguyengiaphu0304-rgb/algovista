@@ -25,5 +25,7 @@ gives a deterministic contract that replay can verify with `findIndex`.
 
 ## What remains?
 
-The core proves trace correctness, not accessibility. The next milestone must render the semantics
-with keyboard, zoom, reduced-motion and screen-reader evidence before making accessibility claims.
+The browser milestone demonstrates semantic rendering, keyboard playback, reduced motion and
+automated accessibility regression checks. Those gates reduce risk but do not prove real
+assistive-technology usability. Manual NVDA/Firefox and VoiceOver/Safari sessions remain an explicit
+release gate.

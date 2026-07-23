@@ -26,6 +26,8 @@ a final answer that the algorithm never produced. AlgoVista separates concerns:
 - Bounded inputs and traces with fail-closed validation.
 - Replay checks for schema, order, mutations, sort multiset and search result integrity.
 - Seeded property-style coverage without live services or nondeterministic fixtures.
+- Responsive semantic playback workspace with visible and screen-reader status.
+- Keyboard navigation, reduced-motion behavior and explicit accessibility budgets.
 
 ## Setup and verification
 
@@ -35,6 +37,9 @@ npm run check
 npm run typecheck
 npm test
 npm run build
+npm run verify:budgets
+npx playwright install chromium
+npm run test:browser
 npm pack --dry-run
 npm audit --audit-level=high
 ```
@@ -64,13 +69,14 @@ claims about performance across devices.
 - [Architecture](docs/architecture.md)
 - [Trace contract](docs/trace-contract.md)
 - [Threat model](docs/threat-model.md)
+- [Accessibility contract](docs/accessibility.md)
 - [Roadmap](docs/roadmap.md)
 - [Interview guide](docs/interview-guide.md)
 - [ADR-001](docs/adr/001-semantic-traces-before-ui.md)
 
 ## Limitations
 
-The repository currently provides a library, not a visual UI. It supports numeric merge sort and
-binary search only, stores full snapshots rather than compact deltas and does not execute untrusted
-user code. Accessibility semantics are encoded, but keyboard, zoom and screen-reader behavior cannot
-be claimed until the UI milestone is implemented and tested.
+The repository supports numeric merge sort and binary search only, stores full snapshots rather than
+compact deltas and does not execute untrusted user code. Automated browser and axe-core checks are
+regression evidence, not proof of usability with every assistive technology. Manual NVDA/Firefox and
+VoiceOver/Safari sessions remain required before the v1.0 accessibility gate can be claimed.

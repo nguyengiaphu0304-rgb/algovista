@@ -10,6 +10,12 @@ import {
   traceBinarySearch,
   traceMergeSort,
 } from "../src/index.js";
+import {
+  clampedStepIndex,
+  createWorkspaceRun,
+  describeStep,
+  parseNumberList,
+} from "../src/web/controller.js";
 
 test("merge sort is deterministic, immutable, sorted, and replayable", () => {
   const input = [5, -1, 5, 0, -0, 2];
@@ -120,4 +126,22 @@ test("seeded property cases match the platform numeric baseline", () => {
     assert.equal(search.resultIndex, expected.indexOf(target));
     assert.equal(replayTrace(search.steps).resultIndex, expected.indexOf(target));
   }
+});
+
+test("workspace controller parses, validates, and describes verified traces", () => {
+  assert.deepEqual(parseNumberList(" 3, -0, 1.5 "), [3, 0, 1.5]);
+  assert.deepEqual(parseNumberList(""), []);
+  assert.throws(() => parseNumberList("1,,2"), /empty/);
+  assert.throws(() => parseNumberList("1, nope"), /finite number/);
+  const sorted = createWorkspaceRun("merge-sort", "3, 1, 2", "");
+  assert.match(sorted.summary, /1, 2, 3/);
+  const firstStep = sorted.steps[0];
+  assert(firstStep);
+  assert.match(describeStep(firstStep), /Step 1/);
+  const found = createWorkspaceRun("binary-search", "1, 2, 2", "2");
+  assert.match(found.summary, /position 2/);
+  assert.throws(() => createWorkspaceRun("binary-search", "2, 1", "1"), /sorted ascending/);
+  assert.throws(() => createWorkspaceRun("binary-search", "1, 2", ""), /target/);
+  assert.equal(clampedStepIndex(0, -1, 4), 0);
+  assert.equal(clampedStepIndex(2, 9, 4), 3);
 });

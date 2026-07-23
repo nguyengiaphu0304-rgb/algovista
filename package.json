@@ -16,6 +16,7 @@
   },
   "files": [
     "lib",
+    "web",
     "LICENSE",
     "README.md"
   ],
@@ -26,10 +27,14 @@
     "typecheck": "tsc --noEmit",
     "test:compile": "tsc -p tsconfig.test.json",
     "test": "npm run test:compile && node --test dist-test/tests/*.test.js",
-    "verify": "npm run check && npm run typecheck && npm test && npm run build && npm pack --dry-run && npm audit --audit-level=high"
+    "test:browser": "npm run build && playwright test",
+    "verify:budgets": "node scripts/verify-budgets.mjs",
+    "verify": "npm run check && npm run typecheck && npm test && npm run build && npm run verify:budgets && npm pack --dry-run && npm audit --audit-level=high"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
     "@types/node": "24.13.3",
     "typescript": "7.0.2"
   }
